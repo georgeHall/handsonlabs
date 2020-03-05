@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  selector:
+    matchLabels:
+      run: backend
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        run: backend
+    spec:
+      containers:
+      - name: backend
+        image: 632354576168.dkr.ecr.ap-southeast-2.amazonaws.com/backend:latest
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  selector:
+    matchLabels:
+      run: frontend
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        run: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: 632354576168.dkr.ecr.ap-southeast-2.amazonaws.com/frontend:latest
+        ports:
+        - containerPort: 8080
+        env:
+          - name: HOST
+            value: backend.default.svc.cluster.local
+          - name: PORT
+            value: "80"
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  labels:
+    run: frontend
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    run: frontend
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  labels:
+    run: backend
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    run: backend
+  type: LoadBalancer
