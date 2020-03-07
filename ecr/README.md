@@ -21,3 +21,6 @@ First we are looking at ECR, which is used to store the docker images that we wi
     `docker push {repo uri}/{frontend repo name}:latest`
     `docker push {repo uri}/{backend repo name}:latest`
     
+If you enables scan on push. You can login to the AWS console and view the CVE issues. These will indicate the severity of the issues and the Issue number which can be remediated.
+
+If the the tag immuntibility is added you will not be able to overwrite any of the pushed image tags.

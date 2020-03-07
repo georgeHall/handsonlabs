@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       run: backend
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: 632354576168.dkr.ecr.ap-southeast-2.amazonaws.com/backend:latest
+        image: << Image uri that was pushed for the Backend >>
         ports:
         - containerPort: 80
         resources:
@@ -33,7 +33,7 @@ spec:
   selector:
     matchLabels:
       run: frontend
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -41,7 +41,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: 632354576168.dkr.ecr.ap-southeast-2.amazonaws.com/frontend:latest
+        image: << Image that was pushed for the front end >>
         ports:
         - containerPort: 8080
         env:

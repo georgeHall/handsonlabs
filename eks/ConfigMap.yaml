@@ -5,17 +5,17 @@ metadata:
   namespace: kube-system
 data:
   mapRoles: |
-    - rolearn: arn:aws:iam::632354576168:role/Node_EKS_HandsOnLabs
+    - rolearn: << IAM Role arn that is attached to the EKS nodes >>
       username: system:node:{{EC2PrivateDNSName}}
       groups:
         - system:bootstrappers
         - system:nodes
-    - rolearn: arn:aws:iam::632354576168:role/eks-admin
-      username: system:node:{{EC2PrivateDNSName}}
+    - rolearn: << ROLE ARN for access to the cluster >>
+      username: << Username that will be associated with the role >>
       groups:
         - system:masters
   mapUsers: |
-    - userarn: arn:aws:iam::632354576168:user/George.Hall
-      username: George
+    - userarn: << IAM role of a user >>
+      username: << User name taht will be associated in EKS logs. >>
       groups:
         - system:masters
